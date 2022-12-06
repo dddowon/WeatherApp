@@ -13,6 +13,7 @@
 		AA3F084629387B4700DCCDB9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA3F084429387B4700DCCDB9 /* Main.storyboard */; };
 		AA3F084829387B4800DCCDB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA3F084729387B4800DCCDB9 /* Assets.xcassets */; };
 		AA3F084B29387B4800DCCDB9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA3F084929387B4800DCCDB9 /* LaunchScreen.storyboard */; };
+		AA73AED2293F749A00335E26 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = AA73AED1293F749A00335E26 /* Alamofire */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA73AED2293F749A00335E26 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,6 +109,9 @@
 			dependencies = (
 			);
 			name = WeatherApp;
+			packageProductDependencies = (
+				AA73AED1293F749A00335E26 /* Alamofire */,
+			);
 			productName = WeatherApp;
 			productReference = AA3F083B29387B4700DCCDB9 /* WeatherApp.app */;
 			productType = "com.apple.product-type.application";
@@ -135,6 +140,9 @@
 				Base,
 			);
 			mainGroup = AA3F083229387B4700DCCDB9;
+			packageReferences = (
+				AA73AED0293F749A00335E26 /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			productRefGroup = AA3F083C29387B4700DCCDB9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -382,6 +390,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AA73AED0293F749A00335E26 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AA73AED1293F749A00335E26 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA73AED0293F749A00335E26 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AA3F083329387B4700DCCDB9 /* Project object */;
 }
