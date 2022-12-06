@@ -21,6 +21,7 @@
 		AA73AEDD293F767200335E26 /* Sys.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA73AEDC293F767200335E26 /* Sys.swift */; };
 		AA73AEDF293F767B00335E26 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA73AEDE293F767B00335E26 /* Weather.swift */; };
 		AA73AEE1293F768300335E26 /* Wind.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA73AEE0293F768300335E26 /* Wind.swift */; };
+		AA73AEE4293F7ED200335E26 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA73AEE3293F7ED200335E26 /* Network.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		AA73AEDC293F767200335E26 /* Sys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sys.swift; sourceTree = "<group>"; };
 		AA73AEDE293F767B00335E26 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		AA73AEE0293F768300335E26 /* Wind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wind.swift; sourceTree = "<group>"; };
+		AA73AEE3293F7ED200335E26 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 		AA3F083D29387B4700DCCDB9 /* WeatherApp */ = {
 			isa = PBXGroup;
 			children = (
+				AA73AEE2293F7EC600335E26 /* Protocol */,
 				AA3F085429387B6E00DCCDB9 /* Controller */,
 				AA3F085329387B6600DCCDB9 /* View */,
 				AA3F085229387B5600DCCDB9 /* Model */,
@@ -120,6 +123,14 @@
 				AA73AEE0293F768300335E26 /* Wind.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		AA73AEE2293F7EC600335E26 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				AA73AEE3293F7ED200335E26 /* Network.swift */,
+			);
+			path = Protocol;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -204,6 +215,7 @@
 				AA3F084329387B4700DCCDB9 /* ViewController.swift in Sources */,
 				AA3F083F29387B4700DCCDB9 /* AppDelegate.swift in Sources */,
 				AA73AEDD293F767200335E26 /* Sys.swift in Sources */,
+				AA73AEE4293F7ED200335E26 /* Network.swift in Sources */,
 				AA73AEDF293F767B00335E26 /* Weather.swift in Sources */,
 				AA73AED9293F765900335E26 /* Coord.swift in Sources */,
 				AA3F084129387B4700DCCDB9 /* SceneDelegate.swift in Sources */,

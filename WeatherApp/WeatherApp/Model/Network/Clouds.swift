@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct Clouds: Decodable {
+struct Clouds: Codable {
     let all: Int
 }
