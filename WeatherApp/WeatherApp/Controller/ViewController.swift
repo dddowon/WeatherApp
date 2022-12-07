@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         updateLocation()
+        fetchWeatherData()
     }
 
 
@@ -62,6 +63,15 @@ extension ViewController: Network {
     }
     
     func fetchWeatherData() {
-        
+        let url = "https://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(lon)&appid=\(appKey)"
+        AF.request(url)
+            .responseDecodable(of: WeatherData.self) { response in
+                switch response.result {
+                case .success(let data):
+                    print(data.name)
+                case .failure(let fail):
+                    print(fail.localizedDescription)
+                }
+            }
     }
 }
