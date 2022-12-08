@@ -7,17 +7,9 @@
 
 import Foundation
 
-struct WeatherData: Codable {
-    let coord: Coord
-    let weather: [Weather]
-    let base: String
-    let main: Main
-    let visibility: Int
-    let wind: Wind
-    let clouds: Clouds
-    let dt: Int
-    let sys: Sys
-    let timezone, id: Int
-    let name: String
-    let cod: Int
+struct WeatherData: Decodable {
+    let timezone: String
+    let current: Current
+    let hourly: [Hourly]
+    let daily: [Daily]
 }

@@ -1,24 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="WeatherApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AreaLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CHM-QI-xdD">
+                                <rect key="frame" x="158.33333333333334" y="99" width="76.666666666666657" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TempLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rfg-HQ-7SG">
+                                <rect key="frame" x="154.66666666666666" y="130" width="83.666666666666657" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WeatherLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rLo-Wz-Qex">
+                                <rect key="frame" x="143.66666666666666" y="161" width="105.66666666666666" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4ZU-Cu-voG">
+                                <rect key="frame" x="144" y="192" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tGV-Fr-Nqc">
+                                <rect key="frame" x="207" y="192" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="rLo-Wz-Qex" firstAttribute="top" secondItem="rfg-HQ-7SG" secondAttribute="bottom" constant="10" id="0FS-yH-WH3"/>
+                            <constraint firstItem="rLo-Wz-Qex" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="92G-4P-Ssh"/>
+                            <constraint firstItem="CHM-QI-xdD" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="EXA-X5-9Xk"/>
+                            <constraint firstItem="rfg-HQ-7SG" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="FKS-b3-3Bm"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="tGV-Fr-Nqc" secondAttribute="trailing" constant="144" id="N52-oV-Qxr"/>
+                            <constraint firstItem="tGV-Fr-Nqc" firstAttribute="leading" secondItem="4ZU-Cu-voG" secondAttribute="trailing" constant="21" id="RoK-lN-Qsu"/>
+                            <constraint firstItem="4ZU-Cu-voG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="144" id="ThR-pO-1hb"/>
+                            <constraint firstItem="rfg-HQ-7SG" firstAttribute="top" secondItem="CHM-QI-xdD" secondAttribute="bottom" constant="10" id="UhG-Vu-QdT"/>
+                            <constraint firstItem="CHM-QI-xdD" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="40" id="W44-rB-xHm"/>
+                            <constraint firstItem="tGV-Fr-Nqc" firstAttribute="top" secondItem="rLo-Wz-Qex" secondAttribute="bottom" constant="10" id="XqV-XL-ELp"/>
+                            <constraint firstItem="4ZU-Cu-voG" firstAttribute="top" secondItem="rLo-Wz-Qex" secondAttribute="bottom" constant="10" id="l1q-sw-uXM"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="areaLabel" destination="CHM-QI-xdD" id="Bpr-Zr-Nty"/>
+                        <outlet property="maxTempLabel" destination="4ZU-Cu-voG" id="ocu-Cw-sCi"/>
+                        <outlet property="minTempLabel" destination="tGV-Fr-Nqc" id="gDP-f7-fLa"/>
+                        <outlet property="tempLabel" destination="rfg-HQ-7SG" id="39A-cP-uLB"/>
+                        <outlet property="weatherLabel" destination="rLo-Wz-Qex" id="RR0-fh-H5d"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="15" y="-2"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

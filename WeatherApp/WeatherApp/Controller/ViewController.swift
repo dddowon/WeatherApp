@@ -10,8 +10,15 @@ import CoreLocation
 import Alamofire
 
 class ViewController: UIViewController {
-
+    
+    @IBOutlet weak var areaLabel: UILabel!
+    @IBOutlet weak var tempLabel: UILabel!
+    @IBOutlet weak var weatherLabel: UILabel!
+    @IBOutlet weak var maxTempLabel: UILabel!
+    @IBOutlet weak var minTempLabel: UILabel!
+    
     let locationManager = CLLocationManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         updateLocation()
@@ -61,14 +68,15 @@ extension ViewController: Network {
         let appKey = "8b1d6295034065c5ed173c4f482c2401"
         return appKey
     }
-    
+
     func fetchWeatherData() {
-        let url = "https://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(lon)&appid=\(appKey)"
+        let url = "https://api.openweathermap.org/data/3.0/onecall?lat=\(lat)&lon=\(lon)&exclude=minutely&appid=\(appKey)"
+        let kelvin = 273.15
         AF.request(url)
             .responseDecodable(of: WeatherData.self) { response in
                 switch response.result {
                 case .success(let data):
-                    print(data.name)
+                    print(data)
                 case .failure(let fail):
                     print(fail.localizedDescription)
                 }
