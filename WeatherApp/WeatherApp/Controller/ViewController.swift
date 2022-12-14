@@ -77,9 +77,24 @@ extension ViewController: Network {
                 switch response.result {
                 case .success(let data):
                     print(data)
+                    let calender = Calendar.current
+                    let date = data.current.sunrise.dateConverter()
+                    print(date)
+                    let day = calender.component(.day, from: date)
+                    print(day)
+                    print(data.current.temp)
+                    let celsius = UnitTemperature.celsius.converter.value(fromBaseUnitValue: data.current.temp)
+                    print(Int(celsius))
                 case .failure(let fail):
                     print(fail.localizedDescription)
                 }
             }
+    }
+}
+
+// MARK: - date 변환
+extension Int {
+    func dateConverter() -> Date {
+        return Date(timeIntervalSince1970: TimeInterval(self))
     }
 }
