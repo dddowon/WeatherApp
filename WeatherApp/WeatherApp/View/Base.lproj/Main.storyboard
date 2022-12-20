@@ -99,6 +99,10 @@
                                                                 </connections>
                                                             </collectionViewCell>
                                                         </cells>
+                                                        <connections>
+                                                            <outlet property="dataSource" destination="BYZ-38-t0r" id="Rug-8Y-nLR"/>
+                                                            <outlet property="delegate" destination="BYZ-38-t0r" id="lG0-Gd-6Rt"/>
+                                                        </connections>
                                                     </collectionView>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>

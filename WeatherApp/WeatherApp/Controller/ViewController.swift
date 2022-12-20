@@ -17,6 +17,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var maxminTempLabel: UILabel!
     
     let locationManager = CLLocationManager()
+    var weatherData: [WeatherData] = []
+    var hourlyData: [Hourly] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,7 +74,7 @@ extension ViewController: Network {
             .responseDecodable(of: WeatherData.self) { response in
                 switch response.result {
                 case .success(let data):
-                    print(data)
+                    self.weatherData.append(data)
                     self.setWeatherLayout(data: data)
                     let calender = Calendar.current
                     let date = data.current.sunrise.dateConverter()
@@ -99,11 +101,16 @@ extension ViewController {
 // MARK: - collectionView
 extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        <#code#>
+        weatherData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        <#code#>
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? HourlyCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        cell.configCell(data: weatherData[indexPath.row].hourly, indexPath: indexPath)
+        
+        return cell
     }
     
     
