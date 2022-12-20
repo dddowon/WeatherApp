@@ -14,8 +14,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var areaLabel: UILabel!
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var weatherLabel: UILabel!
-    @IBOutlet weak var maxTempLabel: UILabel!
-    @IBOutlet weak var minTempLabel: UILabel!
+    @IBOutlet weak var maxminTempLabel: UILabel!
     
     let locationManager = CLLocationManager()
     
@@ -24,8 +23,6 @@ class ViewController: UIViewController {
         updateLocation()
         fetchWeatherData()
     }
-
-
 }
 
 // MARK: - 위도 경도 알아내는 함수
@@ -71,20 +68,17 @@ extension ViewController: Network {
 
     func fetchWeatherData() {
         let url = "https://api.openweathermap.org/data/3.0/onecall?lat=\(lat)&lon=\(lon)&exclude=minutely&appid=\(appKey)"
-        let kelvin = 273.15
         AF.request(url)
             .responseDecodable(of: WeatherData.self) { response in
                 switch response.result {
                 case .success(let data):
                     print(data)
+                    self.setWeatherLayout(data: data)
                     let calender = Calendar.current
                     let date = data.current.sunrise.dateConverter()
                     print(date)
                     let day = calender.component(.day, from: date)
                     print(day)
-                    print(data.current.temp)
-                    let celsius = UnitTemperature.celsius.converter.value(fromBaseUnitValue: data.current.temp)
-                    print(Int(celsius))
                 case .failure(let fail):
                     print(fail.localizedDescription)
                 }
@@ -92,9 +86,38 @@ extension ViewController: Network {
     }
 }
 
+// MARK: - layout
+extension ViewController {
+    func setWeatherLayout(data: WeatherData) {
+        areaLabel.text = data.timezone
+        tempLabel.text = String(data.current.temp.changeCelsius())
+        weatherLabel.text = data.current.weather[0].main
+        maxminTempLabel.text = "최소: \(data.daily[0].temp.min.changeCelsius()), 최대: \(data.daily[0].temp.max.changeCelsius())"
+    }
+}
+
+// MARK: - collectionView
+extension ViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        <#code#>
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        <#code#>
+    }
+    
+    
+}
+
 // MARK: - date 변환
 extension Int {
     func dateConverter() -> Date {
         return Date(timeIntervalSince1970: TimeInterval(self))
+    }
+}
+
+extension Double {
+    func changeCelsius() -> Int {
+        return Int(UnitTemperature.celsius.converter.value(fromBaseUnitValue: self))
     }
 }
