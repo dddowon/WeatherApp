@@ -10,20 +10,93 @@ import CoreLocation
 import Alamofire
 
 class ViewController: UIViewController {
-    
-    @IBOutlet weak var areaLabel: UILabel!
-    @IBOutlet weak var tempLabel: UILabel!
-    @IBOutlet weak var weatherLabel: UILabel!
-    @IBOutlet weak var maxminTempLabel: UILabel!
-    
     let locationManager = CLLocationManager()
-    var weatherData: [WeatherData] = []
-    var hourlyData: [Hourly] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addSubView()
+        setUiConstraints()
         updateLocation()
         fetchWeatherData()
+    }
+    
+    let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.showsVerticalScrollIndicator = false
+        return scrollView
+    }()
+    
+    let mainStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        return stackView
+    }()
+    
+    let areaLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    let tempLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    let weatherLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    let maxMinLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    let firstStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 8
+        return stackView
+    }()
+    
+    func setUiConstraints() {
+        let safeArea = self.view.safeAreaLayoutGuide
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: safeArea.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            
+            mainStackView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+            mainStackView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
+            mainStackView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
+            mainStackView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
+            mainStackView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
+            mainStackView.heightAnchor.constraint(equalToConstant: 1200),
+            
+            firstStackView.topAnchor.constraint(equalTo: mainStackView.topAnchor, constant: 30),
+            firstStackView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor),
+            firstStackView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor)
+        ])
+    }
+    
+    func addSubView() {
+        self.view.addSubview(scrollView)
+        scrollView.addSubview(mainStackView)
+        mainStackView.addSubview(firstStackView)
+        [areaLabel, tempLabel, weatherLabel, maxMinLabel].forEach {
+            firstStackView.addArrangedSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
     }
 }
 
@@ -74,7 +147,6 @@ extension ViewController: Network {
             .responseDecodable(of: WeatherData.self) { response in
                 switch response.result {
                 case .success(let data):
-                    self.weatherData.append(data)
                     self.setWeatherLayout(data: data)
                     let calender = Calendar.current
                     let date = data.current.sunrise.dateConverter()
@@ -94,26 +166,8 @@ extension ViewController {
         areaLabel.text = data.timezone
         tempLabel.text = String(data.current.temp.changeCelsius())
         weatherLabel.text = data.current.weather[0].main
-        maxminTempLabel.text = "최소: \(data.daily[0].temp.min.changeCelsius()), 최대: \(data.daily[0].temp.max.changeCelsius())"
+        maxMinLabel.text = "최소: \(data.daily[0].temp.min.changeCelsius()), 최대: \(data.daily[0].temp.max.changeCelsius())"
     }
-}
-
-// MARK: - collectionView
-extension ViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        weatherData.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? HourlyCollectionViewCell else {
-            return UICollectionViewCell()
-        }
-        cell.configCell(data: weatherData[indexPath.row].hourly, indexPath: indexPath)
-        
-        return cell
-    }
-    
-    
 }
 
 // MARK: - date 변환
