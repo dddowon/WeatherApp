@@ -10,7 +10,7 @@ import UIKit
 class HourlyCollectionViewCell: UICollectionViewCell {
     static let identifier = "HourlyCell"
     
-    private let collectionStackView: UIStackView = {
+    private let cellStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
@@ -46,20 +46,19 @@ class HourlyCollectionViewCell: UICollectionViewCell {
     
     func createLayout() {
         [hourLabel, weatherImageView ,hourTempLabel].forEach {
-            collectionStackView.addArrangedSubview($0)
+            cellStackView.addArrangedSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
-        
-        contentView.addSubview(collectionStackView)
+        contentView.addSubview(cellStackView)
         
         NSLayoutConstraint.activate([
-            collectionStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            collectionStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            collectionStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            collectionStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            cellStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            cellStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            cellStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            cellStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             
-            weatherImageView.centerXAnchor.constraint(equalTo: collectionStackView.centerXAnchor),
-            weatherImageView.centerYAnchor.constraint(equalTo: collectionStackView.centerYAnchor),
+            weatherImageView.centerXAnchor.constraint(equalTo: cellStackView.centerXAnchor),
+            weatherImageView.centerYAnchor.constraint(equalTo: cellStackView.centerYAnchor),
             weatherImageView.widthAnchor.constraint(equalToConstant: 30),
             weatherImageView.heightAnchor.constraint(equalToConstant: 30),
         ])

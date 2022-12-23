@@ -16,7 +16,7 @@ enum Section {
 class ViewController: UIViewController {
     let locationManager = CLLocationManager()
     let weatherData: [WeatherData] = []
-    var collectionView: UICollectionView!
+    var horizontalCollectionView: UICollectionView!
     var dataSource: UICollectionViewDiffableDataSource<Section, Hourly>!
     
     override func viewDidLoad() {
@@ -59,17 +59,16 @@ class ViewController: UIViewController {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.showsVerticalScrollIndicator = false
-        scrollView.backgroundColor = .blue
         return scrollView
     }()
     
-    let mainView: UIView = {
+    let baseView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    let firstStackView: UIStackView = {
+    let mainStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
@@ -79,28 +78,32 @@ class ViewController: UIViewController {
         return stackView
     }()
     
-    let secondView: UIView = {
+    let hourlyWeatherView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .black
         return view
     }()
     
-//    let thirdView: UIView = {
-//        let view = UIView()
-//        return view
-//    }()
+    let baseStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 10
+        return stackView
+    }()
     
     func addSubView() {
         self.view.addSubview(scrollView)
-        scrollView.addSubview(mainView)
-        mainView.addSubview(firstStackView)
+        scrollView.addSubview(baseView)
+        baseView.addSubview(mainStackView)
         [areaLabel, tempLabel, weatherLabel, maxMinLabel].forEach {
-            firstStackView.addArrangedSubview($0)
+            mainStackView.addArrangedSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
-        mainView.addSubview(secondView)
-//        mainView.addSubview(thirdView)
+        baseView.addSubview(hourlyWeatherView)
+        baseView.addSubview(baseStackView)
     }
     
     func setUiConstraints() {
@@ -111,22 +114,27 @@ class ViewController: UIViewController {
             scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             
-            mainView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
-            mainView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
-            mainView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
-            mainView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
-            mainView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
-            mainView.heightAnchor.constraint(equalToConstant: 1200),
+            baseView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+            baseView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
+            baseView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
+            baseView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
+            baseView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
+            baseView.heightAnchor.constraint(equalToConstant: 1200),
             
-            firstStackView.topAnchor.constraint(equalTo: mainView.topAnchor, constant: 60),
-            firstStackView.leadingAnchor.constraint(equalTo: mainView.leadingAnchor),
-            firstStackView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor),
-            firstStackView.bottomAnchor.constraint(equalTo: mainView.topAnchor, constant: 260),
+            mainStackView.topAnchor.constraint(equalTo: baseView.topAnchor, constant: 60),
+            mainStackView.leadingAnchor.constraint(equalTo: baseView.leadingAnchor),
+            mainStackView.trailingAnchor.constraint(equalTo: baseView.trailingAnchor),
+            mainStackView.bottomAnchor.constraint(equalTo: baseView.topAnchor, constant: 260),
 
-            secondView.topAnchor.constraint(equalTo: firstStackView.bottomAnchor, constant: 5),
-            secondView.leadingAnchor.constraint(equalTo: mainView.leadingAnchor),
-            secondView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor),
-            secondView.heightAnchor.constraint(equalToConstant: 150)
+            hourlyWeatherView.topAnchor.constraint(equalTo: mainStackView.bottomAnchor, constant: 60),
+            hourlyWeatherView.leadingAnchor.constraint(equalTo: baseView.leadingAnchor),
+            hourlyWeatherView.trailingAnchor.constraint(equalTo: baseView.trailingAnchor),
+            hourlyWeatherView.heightAnchor.constraint(equalToConstant: 100),
+            
+            baseStackView.topAnchor.constraint(equalTo: hourlyWeatherView.bottomAnchor, constant: 10),
+            baseStackView.leadingAnchor.constraint(equalTo: baseView.leadingAnchor),
+            baseStackView.trailingAnchor.constraint(equalTo: baseView.trailingAnchor),
+            baseStackView.bottomAnchor.constraint(equalTo: baseView.bottomAnchor)
         ])
     }
     
@@ -134,7 +142,7 @@ class ViewController: UIViewController {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(55), heightDimension: .absolute(80))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(50), heightDimension: .absolute(80))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
 
         
@@ -148,18 +156,18 @@ class ViewController: UIViewController {
     }
     
     func createCollectionView() {
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
+        horizontalCollectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         
-        secondView.addSubview(collectionView)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor = .blue
-        collectionView.alpha = 1
+        hourlyWeatherView.addSubview(horizontalCollectionView)
+        horizontalCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        horizontalCollectionView.alpha = 1
+        horizontalCollectionView.layer.cornerRadius = 10
         
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: secondView.topAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: secondView.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: secondView.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: secondView.bottomAnchor),
+            horizontalCollectionView.topAnchor.constraint(equalTo: hourlyWeatherView.topAnchor),
+            horizontalCollectionView.leadingAnchor.constraint(equalTo: hourlyWeatherView.leadingAnchor, constant: 10),
+            horizontalCollectionView.trailingAnchor.constraint(equalTo: hourlyWeatherView.trailingAnchor, constant: -10),
+            horizontalCollectionView.bottomAnchor.constraint(equalTo: hourlyWeatherView.bottomAnchor),
         ])
     }
     
@@ -172,7 +180,7 @@ class ViewController: UIViewController {
             }
         }
         
-        dataSource = UICollectionViewDiffableDataSource<Section, Hourly>(collectionView: collectionView, cellProvider: { (collectionView, indexPath, itemIdentifier) -> UICollectionViewCell? in
+        dataSource = UICollectionViewDiffableDataSource<Section, Hourly>(collectionView: horizontalCollectionView, cellProvider: { (collectionView, indexPath, itemIdentifier) -> UICollectionViewCell? in
             return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: itemIdentifier)
         })
         
@@ -234,7 +242,7 @@ extension ViewController: Network {
                     DispatchQueue.main.async {
                         self.createCollectionView()
                         self.configDataSource(hourly: data.hourly)
-                        self.collectionView.reloadData()
+                        self.horizontalCollectionView.reloadData()
                     }
                     print(data)
                 case .failure(let fail):
