@@ -7,7 +7,6 @@
 
 import UIKit
 import CoreLocation
-import Alamofire
 
 enum Section {
     case main
@@ -21,9 +20,9 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateLocation()
         addSubView()
         setUiConstraints()
-        updateLocation()
         fetchWeatherData()
     }
     
@@ -94,6 +93,12 @@ class ViewController: UIViewController {
         return stackView
     }()
     
+    let dailyWeatherView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     func addSubView() {
         self.view.addSubview(scrollView)
         scrollView.addSubview(baseView)
@@ -104,6 +109,7 @@ class ViewController: UIViewController {
         }
         baseView.addSubview(hourlyWeatherView)
         baseView.addSubview(baseStackView)
+        baseStackView.addSubview(dailyWeatherView)
     }
     
     func setUiConstraints() {
@@ -134,60 +140,13 @@ class ViewController: UIViewController {
             baseStackView.topAnchor.constraint(equalTo: hourlyWeatherView.bottomAnchor, constant: 10),
             baseStackView.leadingAnchor.constraint(equalTo: baseView.leadingAnchor),
             baseStackView.trailingAnchor.constraint(equalTo: baseView.trailingAnchor),
-            baseStackView.bottomAnchor.constraint(equalTo: baseView.bottomAnchor)
+            baseStackView.bottomAnchor.constraint(equalTo: baseView.bottomAnchor),
+            
+            dailyWeatherView.topAnchor.constraint(equalTo: baseStackView.topAnchor),
+            dailyWeatherView.leadingAnchor.constraint(equalTo: baseStackView.leadingAnchor),
+            dailyWeatherView.trailingAnchor.constraint(equalTo: baseStackView.trailingAnchor),
+            dailyWeatherView.heightAnchor.constraint(equalToConstant: 300)
         ])
-    }
-    
-    func createLayout() -> UICollectionViewCompositionalLayout {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(50), heightDimension: .absolute(80))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
-
-        
-        let section = NSCollectionLayoutSection(group: group)
-        section.interGroupSpacing = CGFloat(10)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
-        section.orthogonalScrollingBehavior = .continuous
-        
-        let layout = UICollectionViewCompositionalLayout(section: section)
-        return layout
-    }
-    
-    func createCollectionView() {
-        horizontalCollectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
-        
-        hourlyWeatherView.addSubview(horizontalCollectionView)
-        horizontalCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        horizontalCollectionView.alpha = 1
-        horizontalCollectionView.layer.cornerRadius = 10
-        
-        NSLayoutConstraint.activate([
-            horizontalCollectionView.topAnchor.constraint(equalTo: hourlyWeatherView.topAnchor),
-            horizontalCollectionView.leadingAnchor.constraint(equalTo: hourlyWeatherView.leadingAnchor, constant: 10),
-            horizontalCollectionView.trailingAnchor.constraint(equalTo: hourlyWeatherView.trailingAnchor, constant: -10),
-            horizontalCollectionView.bottomAnchor.constraint(equalTo: hourlyWeatherView.bottomAnchor),
-        ])
-    }
-    
-    func configDataSource(hourly: [Hourly]) {
-        let cellRegistration = UICollectionView.CellRegistration<HourlyCollectionViewCell, Hourly>  { cell, indexPath, data in
-            if data.dt == hourly[0].dt {
-                cell.configCell2(data: data)
-            } else {
-                cell.configCell(data: data)
-            }
-        }
-        
-        dataSource = UICollectionViewDiffableDataSource<Section, Hourly>(collectionView: horizontalCollectionView, cellProvider: { (collectionView, indexPath, itemIdentifier) -> UICollectionViewCell? in
-            return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: itemIdentifier)
-        })
-        
-        var snapShot = NSDiffableDataSourceSnapshot<Section, Hourly>()
-        snapShot.appendSections([.main])
-        snapShot.appendItems(hourly)
-        dataSource.apply(snapShot)
     }
 }
 
@@ -211,48 +170,7 @@ extension ViewController: CLLocationManagerDelegate {
     }
 }
 
-// MARK: - Alamofire
-extension ViewController: Network {
-    var lat: Double {
-        guard let latitude = locationManager.location?.coordinate.latitude else {
-            return 0
-        }
-        return latitude
-    }
-    
-    var lon: Double {
-        guard let longitude = locationManager.location?.coordinate.longitude else {
-            return 0
-        }
-        return longitude
-    }
-    
-    var appKey: String {
-        let appKey = "8b1d6295034065c5ed173c4f482c2401"
-        return appKey
-    }
-
-    func fetchWeatherData() {
-        let url = "https://api.openweathermap.org/data/3.0/onecall?lat=\(lat)&lon=\(lon)&exclude=minutely&appid=\(appKey)"
-        AF.request(url)
-            .responseDecodable(of: WeatherData.self) { response in
-                switch response.result {
-                case .success(let data):
-                    self.setWeatherLayout(data: data)
-                    DispatchQueue.main.async {
-                        self.createCollectionView()
-                        self.configDataSource(hourly: data.hourly)
-                        self.horizontalCollectionView.reloadData()
-                    }
-                    print(data)
-                case .failure(let fail):
-                    print(fail.localizedDescription)
-                }
-            }
-    }
-}
-
-// MARK: - layout
+// MARK: - MainLayout
 extension ViewController {
     func setWeatherLayout(data: WeatherData) {
         let area = data.timezone.split(separator: "/")
