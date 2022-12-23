@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct WeatherData: Decodable {
+struct WeatherData: Decodable, Hashable {
     let timezone: String
     let current: Current
     let hourly: [Hourly]

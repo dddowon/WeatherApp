@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Weather: Decodable {
+struct Weather: Decodable, Hashable {
     let main: String
     let icon: String
 }

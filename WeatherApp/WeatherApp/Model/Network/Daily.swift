@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Daily: Decodable {
+struct Daily: Decodable, Hashable {
     let dt: Int
     let temp: Temp
     let weather: [Weather]

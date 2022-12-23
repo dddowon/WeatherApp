@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Current: Decodable {
+struct Current: Decodable, Hashable {
     let temp: Double
     let sunrise: Int
     let sunset: Int

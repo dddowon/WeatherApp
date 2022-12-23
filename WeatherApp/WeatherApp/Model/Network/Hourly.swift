@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Hourly: Decodable {
+struct Hourly: Decodable, Hashable {
     let dt: Int
     let temp: Double
     let weather: [Weather]
