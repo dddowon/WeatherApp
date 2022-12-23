@@ -37,8 +37,11 @@ extension ViewController: Network {
                     self.setWeatherLayout(data: data)
                     DispatchQueue.main.async {
                         self.createHoulryCollectionView()
+                        self.createDailyCollectionView()
                         self.configHourlyDataSource(hourly: data.hourly)
-                        self.horizontalCollectionView.reloadData()
+                        self.hourlyCollectionView.reloadData()
+                        self.configDailyDataSource(daily: data.daily)
+                        self.dailyCollectionView.reloadData()
                     }
                     print(data)
                 case .failure(let fail):

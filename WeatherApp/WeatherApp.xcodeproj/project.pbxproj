@@ -24,6 +24,8 @@
 		AA73AEE4293F7ED200335E26 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA73AEE3293F7ED200335E26 /* Network.swift */; };
 		AAC240CD29560AAE006AEC64 /* HourlyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC240CC29560AAE006AEC64 /* HourlyViewController.swift */; };
 		AAC240CF29560B22006AEC64 /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC240CE29560B22006AEC64 /* NetworkController.swift */; };
+		AAC240D329560C01006AEC64 /* DailyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC240D229560C01006AEC64 /* DailyViewController.swift */; };
+		AAC240D529560C26006AEC64 /* DailyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC240D429560C26006AEC64 /* DailyCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +47,8 @@
 		AA73AEE3293F7ED200335E26 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		AAC240CC29560AAE006AEC64 /* HourlyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyViewController.swift; sourceTree = "<group>"; };
 		AAC240CE29560B22006AEC64 /* NetworkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkController.swift; sourceTree = "<group>"; };
+		AAC240D229560C01006AEC64 /* DailyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyViewController.swift; sourceTree = "<group>"; };
+		AAC240D429560C26006AEC64 /* DailyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +117,8 @@
 				AA3F084229387B4700DCCDB9 /* MainViewController.swift */,
 				AAC240CC29560AAE006AEC64 /* HourlyViewController.swift */,
 				AA2194EB29518658000BB54E /* HourlyCollectionViewCell.swift */,
+				AAC240D229560C01006AEC64 /* DailyViewController.swift */,
+				AAC240D429560C26006AEC64 /* DailyCollectionViewCell.swift */,
 				AAC240CE29560B22006AEC64 /* NetworkController.swift */,
 			);
 			path = Controller;
@@ -216,6 +222,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AAC240D529560C26006AEC64 /* DailyCollectionViewCell.swift in Sources */,
+				AAC240D329560C01006AEC64 /* DailyViewController.swift in Sources */,
 				AA73AED4293F757C00335E26 /* WeatherData.swift in Sources */,
 				AA3F084329387B4700DCCDB9 /* MainViewController.swift in Sources */,
 				AA2194EC29518658000BB54E /* HourlyCollectionViewCell.swift in Sources */,

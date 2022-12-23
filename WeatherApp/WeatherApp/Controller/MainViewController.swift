@@ -15,8 +15,10 @@ enum Section {
 class ViewController: UIViewController {
     let locationManager = CLLocationManager()
     let weatherData: [WeatherData] = []
-    var horizontalCollectionView: UICollectionView!
-    var dataSource: UICollectionViewDiffableDataSource<Section, Hourly>!
+    var hourlyCollectionView: UICollectionView!
+    var dailyCollectionView: UICollectionView!
+    var hourlyDataSource: UICollectionViewDiffableDataSource<Section, Hourly>!
+    var dailyDataSource: UICollectionViewDiffableDataSource<Section, Daily>!
     
     override func viewDidLoad() {
         super.viewDidLoad()

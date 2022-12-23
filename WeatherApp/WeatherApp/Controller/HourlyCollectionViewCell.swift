@@ -16,6 +16,7 @@ class HourlyCollectionViewCell: UICollectionViewCell {
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.distribution = .equalSpacing
+        stackView.spacing = 10
         return stackView
     }()
     
@@ -25,7 +26,7 @@ class HourlyCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    let weatherImageView: UIImageView = {
+    let hourlyWeatherImageView: UIImageView = {
         let image = UIImageView()
         return image
     }()
@@ -37,15 +38,15 @@ class HourlyCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        createLayout()
+        createHourlyCellLayout()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
     
-    func createLayout() {
-        [hourLabel, weatherImageView ,hourTempLabel].forEach {
+    func createHourlyCellLayout() {
+        [hourLabel, hourlyWeatherImageView ,hourTempLabel].forEach {
             cellStackView.addArrangedSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -57,25 +58,25 @@ class HourlyCollectionViewCell: UICollectionViewCell {
             cellStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             cellStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             
-            weatherImageView.centerXAnchor.constraint(equalTo: cellStackView.centerXAnchor),
-            weatherImageView.centerYAnchor.constraint(equalTo: cellStackView.centerYAnchor),
-            weatherImageView.widthAnchor.constraint(equalToConstant: 30),
-            weatherImageView.heightAnchor.constraint(equalToConstant: 30),
+            hourlyWeatherImageView.centerXAnchor.constraint(equalTo: cellStackView.centerXAnchor),
+            hourlyWeatherImageView.centerYAnchor.constraint(equalTo: cellStackView.centerYAnchor),
+            hourlyWeatherImageView.widthAnchor.constraint(equalToConstant: 30),
+            hourlyWeatherImageView.heightAnchor.constraint(equalToConstant: 30),
         ])
     }
     
-    func configCell(data: Hourly) {
+    func configHourlyCell(data: Hourly) {
         let calender = Calendar.current
         let date = data.dt.dateConverter()
         let hour = calender.component(.hour, from: date)
         hourLabel.text = String(hour) + "시"
-        weatherImageView.image = UIImage(named: data.weather[0].icon)
+        hourlyWeatherImageView.image = UIImage(named: data.weather[0].icon)
         hourTempLabel.text = String(data.temp.changeCelsius()) + "°"
     }
     
-    func configCell2(data: Hourly) {
+    func configNowHourlyCell(data: Hourly) {
         hourLabel.text = "지금"
-        weatherImageView.image = UIImage(named: data.weather[0].icon)
+        hourlyWeatherImageView.image = UIImage(named: data.weather[0].icon)
         hourTempLabel.text = String(data.temp.changeCelsius()) + "°"
     }
 }
