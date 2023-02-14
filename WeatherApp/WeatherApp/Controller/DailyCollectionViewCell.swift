@@ -12,6 +12,7 @@ class DailyCollectionViewCell: UICollectionViewCell {
     
     let dailyLabel: UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -22,16 +23,37 @@ class DailyCollectionViewCell: UICollectionViewCell {
     
     let dailyMinTemp: UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     let dailyMaxTemp: UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+    
+    let dailyView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let dailyMinView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let dailyMaxView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        createDailyView()
         createDailyLayout()
     }
     
@@ -39,21 +61,46 @@ class DailyCollectionViewCell: UICollectionViewCell {
         super.init(coder: coder)
     }
     
+    func createDailyView() {
+        dailyView.addSubview(dailyLabel)
+        dailyMinView.addSubview(dailyMinTemp)
+        dailyMaxView.addSubview(dailyMaxTemp)
+        
+        NSLayoutConstraint.activate([
+            dailyLabel.centerXAnchor.constraint(equalTo: dailyView.centerXAnchor),
+            dailyLabel.centerYAnchor.constraint(equalTo: dailyView.centerYAnchor),
+            
+            dailyMinTemp.centerXAnchor.constraint(equalTo: dailyMinView.centerXAnchor),
+            dailyMinTemp.centerYAnchor.constraint(equalTo: dailyMinView.centerYAnchor),
+            
+            dailyMaxTemp.centerXAnchor.constraint(equalTo: dailyMaxView.centerXAnchor),
+            dailyMaxTemp.centerYAnchor.constraint(equalTo: dailyMaxView.centerYAnchor),
+        ])
+    }
+    
     func createDailyLayout() {
-        [dailyLabel, dailyWeatherImageView, dailyMinTemp, dailyMaxTemp].forEach {
+        [dailyView, dailyWeatherImageView, dailyMinView, dailyMaxView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             self.contentView.addSubview($0)
         }
         
         NSLayoutConstraint.activate([
-            dailyLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
-            dailyLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-            dailyLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            dailyView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            dailyView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 25),
+            dailyView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             
             dailyWeatherImageView.widthAnchor.constraint(equalToConstant: 30),
             dailyWeatherImageView.heightAnchor.constraint(equalToConstant: 30),
             dailyWeatherImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 9),
-            dailyWeatherImageView.leadingAnchor.constraint(equalTo: dailyLabel.trailingAnchor, constant: 45),
+            dailyWeatherImageView.leadingAnchor.constraint(equalTo: dailyView.trailingAnchor, constant: 90),
+            
+            dailyMinView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            dailyMinView.leadingAnchor.constraint(equalTo: dailyWeatherImageView.trailingAnchor, constant: 90),
+            dailyMinView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            
+            dailyMaxView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            dailyMaxView.leadingAnchor.constraint(equalTo: dailyMinView.trailingAnchor, constant: 90),
+            dailyMaxView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
 
         ])
     }
@@ -62,7 +109,9 @@ class DailyCollectionViewCell: UICollectionViewCell {
         let calender = Calendar.current
         let date = data.dt.dateConverter()
         let day = calender.component(.day, from: date)
-        dailyLabel.text = String(day)
+        dailyLabel.text = String(day) + "일"
         dailyWeatherImageView.image = UIImage(named: data.weather[0].icon)
+        dailyMinTemp.text = String(data.temp.min.changeCelsius()) + "°"
+        dailyMaxTemp.text = String(data.temp.max.changeCelsius()) + "°"
     }
 }
