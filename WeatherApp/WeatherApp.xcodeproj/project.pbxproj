@@ -82,7 +82,6 @@
 		AA3F083D29387B4700DCCDB9 /* WeatherApp */ = {
 			isa = PBXGroup;
 			children = (
-				AA73AEE2293F7EC600335E26 /* Protocol */,
 				AA3F085429387B6E00DCCDB9 /* Controller */,
 				AA3F085329387B6600DCCDB9 /* View */,
 				AA3F085229387B5600DCCDB9 /* Model */,
@@ -94,6 +93,7 @@
 		AA3F085229387B5600DCCDB9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				AA73AEE2293F7EC600335E26 /* Protocol */,
 				AA73AED5293F763E00335E26 /* Network */,
 			);
 			path = Model;

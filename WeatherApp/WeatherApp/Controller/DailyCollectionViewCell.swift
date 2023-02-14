@@ -10,42 +10,42 @@ import UIKit
 class DailyCollectionViewCell: UICollectionViewCell {
     static let identifier = "DailyCell"
     
-    let dailyLabel: UILabel = {
+    private let dailyLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let dailyWeatherImageView: UIImageView = {
+    private let dailyWeatherImageView: UIImageView = {
         let image = UIImageView()
         return image
     }()
     
-    let dailyMinTemp: UILabel = {
+    private let dailyMinTemp: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let dailyMaxTemp: UILabel = {
+    private let dailyMaxTemp: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let dailyView: UIView = {
+    private let dailyView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    let dailyMinView: UIView = {
+    private let dailyMinView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    let dailyMaxView: UIView = {
+    private let dailyMaxView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -61,7 +61,7 @@ class DailyCollectionViewCell: UICollectionViewCell {
         super.init(coder: coder)
     }
     
-    func createDailyView() {
+    private func createDailyView() {
         dailyView.addSubview(dailyLabel)
         dailyMinView.addSubview(dailyMinTemp)
         dailyMaxView.addSubview(dailyMaxTemp)
@@ -78,7 +78,7 @@ class DailyCollectionViewCell: UICollectionViewCell {
         ])
     }
     
-    func createDailyLayout() {
+    private func createDailyLayout() {
         [dailyView, dailyWeatherImageView, dailyMinView, dailyMaxView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             self.contentView.addSubview($0)

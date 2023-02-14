@@ -20,18 +20,18 @@ class HourlyCollectionViewCell: UICollectionViewCell {
         return stackView
     }()
     
-    let hourLabel: UILabel = {
+    private let hourLabel: UILabel = {
         let label = UILabel()
         label.alpha = 1
         return label
     }()
     
-    let hourlyWeatherImageView: UIImageView = {
+    private let hourlyWeatherImageView: UIImageView = {
         let image = UIImageView()
         return image
     }()
     
-    let hourTempLabel: UILabel = {
+    private let hourTempLabel: UILabel = {
         let label = UILabel()
         return label
     }()
@@ -45,7 +45,7 @@ class HourlyCollectionViewCell: UICollectionViewCell {
         super.init(coder: coder)
     }
     
-    func createHourlyCellLayout() {
+    private func createHourlyCellLayout() {
         [hourLabel, hourlyWeatherImageView ,hourTempLabel].forEach {
             cellStackView.addArrangedSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false

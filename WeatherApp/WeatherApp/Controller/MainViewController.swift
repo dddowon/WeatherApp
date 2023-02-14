@@ -28,48 +28,48 @@ class ViewController: UIViewController {
         fetchWeatherData()
     }
     
-    let areaLabel: UILabel = {
+    private let areaLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 30)
         return label
     }()
     
-    let tempLabel: UILabel = {
+    private let tempLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 90)
         return label
     }()
     
-    let weatherLabel: UILabel = {
+    private let weatherLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 20)
         return label
     }()
     
-    let maxMinLabel: UILabel = {
+    private let maxMinLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 20)
         return label
     }()
     
-    let scrollView: UIScrollView = {
+    private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.showsVerticalScrollIndicator = false
         return scrollView
     }()
     
-    let baseView: UIView = {
+    private let baseView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    let mainStackView: UIStackView = {
+    private let mainStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
@@ -85,7 +85,7 @@ class ViewController: UIViewController {
         return view
     }()
     
-    let baseStackView: UIStackView = {
+    private let baseStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
@@ -101,7 +101,7 @@ class ViewController: UIViewController {
         return view
     }()
     
-    func addSubView() {
+    private func addSubView() {
         self.view.addSubview(scrollView)
         scrollView.addSubview(baseView)
         baseView.addSubview(mainStackView)
@@ -114,7 +114,7 @@ class ViewController: UIViewController {
         baseStackView.addSubview(dailyWeatherView)
     }
     
-    func setUiConstraints() {
+    private func setUiConstraints() {
         let safeArea = self.view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: safeArea.topAnchor),
